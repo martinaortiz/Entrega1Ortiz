@@ -1,0 +1,25 @@
+{% extends "AppCoder/padre.html" %}
+
+{% load static %}
+
+
+{% block contenidoModificable %}
+
+<h1 style=color:lightblue> Profesores: </h1>
+
+{% endblock %}
+
+{% block contenido2 %} 
+<p>Cargar profesor:</p>
+<form action="" method = "POST">{% csrf_token %}
+
+    <table>
+
+       {{profesores.as_table}}
+
+    </table>
+
+   <input type='submit' value="Enviar">
+
+</form>
+{% endblock %} 

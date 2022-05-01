@@ -1,0 +1,52 @@
+{% extends "AppCoder/padre.html" %}
+
+{% load static %}
+
+
+{% block contenidoModificable %}
+
+<h1 style=color:lightblue>Cursos:</h1>
+
+
+{% endblock %}
+
+
+{% block contenido2 %} 
+
+{% if miFormulario.errors %} 
+
+<p style ='color:red'>Datos incorrectos</p>
+
+{% endif %} 
+
+<p>Cargar curso:
+
+</p>
+<form action="" method = "POST">{% csrf_token %}
+
+     <table>
+
+        {{miFormulario.as_table}}
+
+     </table>
+
+    <input type='submit' value="Enviar">
+    <p>
+       
+    </p>
+</form>
+
+<p>
+   Buscar curso por camada:
+</p>
+
+<form action="/AppCoder/buscar/" method="GET">{% csrf_token %}
+
+   <input TYPE="number" name="camada" id="camada">
+   <input type="submit" value="Buscar">
+
+</form>
+
+
+{% endblock %} 
+

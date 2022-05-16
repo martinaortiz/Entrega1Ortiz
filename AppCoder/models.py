@@ -4,8 +4,8 @@ from django.db import models
 
 class Curso(models.Model):
     nombre = models.CharField(max_length=30)
-    camada = models.IntegerField()
-    duracion = models.IntegerField(default=0)
+    division =  models.CharField(max_length=2)
+    deporte =  models.CharField(max_length=30)
    
 class Estudiante(models.Model):
     nombre = models.CharField(max_length=30)

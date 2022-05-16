@@ -1,10 +1,10 @@
 
 from django.http import HttpResponse
-from AppCoder.models import Curso, Profesor
+from AppCoder.models import Club, Jugadora, Profesor
 from django.shortcuts import render
 from django.template import Template
-from AppCoder.forms import CursoFormulario, MiEstudiante, Profesores
-from AppCoder.models import Estudiante
+from AppCoder.forms import ClubFormulario, JugadoraForm, Profesores, RegistroFormulario
+from AppCoder.models import Jugadora
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -59,12 +59,12 @@ def login_request(request):
 
     return render(request, "AppCoder/login.html", {'form':form}) #vincular la vista con la plantilla de html
 
-@login_required
+
 def club(request):
 
     if request.method == 'POST':
 
-        miFormulario = CursoFormulario(request.POST) #aca llega la info del formulario
+        miFormulario = ClubFormulario(request.POST) #aca llega la info del formulario
 
         print(miFormulario) #muestra en terminal
 
@@ -72,65 +72,89 @@ def club(request):
 
             informacion = miFormulario.cleaned_data
 
-            curso = Curso(nombre=informacion['curso'], camada=informacion['camada'], duracion=informacion['duracion']) #creo el curso con la info recivida
+            club = Club(nombre=informacion['club'], division=informacion['division'], deporte=informacion['deporte']) #creo el curso con la info recivida
 
-            curso.save()
+            club.save()
 
             return render(request, 'AppCoder/inicio.html') #una vez guardado mostramos la plantilla de inicio
 
     else:
-        miFormulario = CursoFormulario() #me muestra un formulario vacio
+        miFormulario = ClubFormulario()  #me muestra un formulario vacio
 
 
-    return render(request, 'AppCoder/cursos/curso.html', {'miFormulario':miFormulario})
+    return render(request, 'AppCoder/clubes/club.html', {'miFormulario':miFormulario})
 
-class CursoList(LoginRequiredMixin, ListView):
-    model = Curso
-    template_name = 'AppCoder/cursos/cursos_list.html'
+class ClubList(LoginRequiredMixin, ListView):
+    model = Club
+    template_name = 'AppCoder/clubes/clubes_list.html'
 
-class CursoDetalle(DetailView):
-    model = Curso
-    template_name= 'AppCoder/cursos/curso_detalle.html'
+class ClubDetalle(DetailView):
+    model = Club
+    template_name= 'AppCoder/clubes/club_detalle.html'
 
-class CursoCreacion(CreateView):
-    model = Curso
-    success_url= '/AppCoder/curso/lista'
-    fields= ['nombre', 'camada', 'duracion']
+class ClubCreacion(CreateView):
+    model = Club
+    success_url= '/AppCoder/club/lista'
+    fields= ['nombre', 'division', 'deporte']
 
-class CursoUpdate(UpdateView):
-    model = Curso
-    success_url= '/AppCoder/curso/lista'
-    fields= ['nombre', 'camada', 'duracion']
+class ClubUpdate(UpdateView):
+    model = Club
+    success_url= '/AppCoder/club/lista'
+    fields= ['nombre', 'division', 'deporte']
 
-class CursoDelete(DeleteView):
-    model = Curso
-    success_url= 'AppCoder/curso/lista'
+class ClubDelete(DeleteView):
+    model = Club
+    success_url= '/AppCoder/club/lista'
 
 
-def estudiante(request):
+def jugadora(request):
   
      if request.method == 'POST':
 
-        miEstudiante = MiEstudiante(request.POST) 
+        miFormulario = JugadoraForm(request.POST) 
 
-        print(miEstudiante) 
+        print(miFormulario) 
 
-        if miEstudiante.is_valid():        
+        if miFormulario.is_valid():        
 
-            info1 = miEstudiante.cleaned_data
+            info1 = miFormulario.cleaned_data
 
-            estudiante = Estudiante(nombre=info1['nombre'], apellido=info1['apellido'], mail=info1['mail'])  
+            jugadora = Jugadora(nombre=info1['nombre'], apellido=info1['apellido'], mail=info1['mail'], club=info1['club'], deporte=info1['deporte'])  
 
-            estudiante.save()
+            jugadora.save()
 
             return render(request, 'AppCoder/inicio.html') 
 
      else:
-        miEstudiante = MiEstudiante() 
+        miFormulario = JugadoraForm() 
 
 
-     return render(request, 'AppCoder/estudiante.html', {'miEstudiante': miEstudiante})
-    
+     return render(request, 'AppCoder/jugadoras/jugadora.html', {'miFormulario': miFormulario})
+
+
+class JugadoraList(LoginRequiredMixin, ListView):
+    model = Jugadora
+    template_name = 'AppCoder/jugadoras/jugadora_list.html'
+
+class JugadoraDetalle(DetailView):
+    model = Jugadora
+    template_name= 'AppCoder/jugadoras/jugadora_detalle.html'
+
+class JugadoraCreacion(CreateView):
+    model = Jugadora
+    success_url= '/AppCoder/jugadora/lista'
+    fields= ['nombre', 'apellido', 'mail', 'club', 'deporte']
+
+class JugadoraUpdate(UpdateView):
+    model = Jugadora
+    success_url= '/AppCoder/jugadora/lista'
+    fields= ['nombre', 'apellido', 'mail', 'club', 'deporte']
+
+class JugadoraDelete(DeleteView):
+    model = Jugadora
+    success_url= '/AppCoder/jugadora/lista'
+
+
 
 
 
@@ -171,13 +195,13 @@ def inicio(request):
 
 def buscar(request):
 
-    if request.GET['camada']:
+    if request.GET['deporte']:
 
-        camada= request.GET['camada']
+        deporte= request.GET['deporte']
         #curso = Curso.objects.filter(camada__icontains=camada) #icontains significa que el numero que buscamos esta dentro del numero de camada
-        curso = Curso.objects.filter(camada__iexact=camada)
+        club = Club.objects.filter(deporte__iexact=deporte)
 
-        return render(request, 'AppCoder/resultadosBusqueda.html', {'curso':curso, 'camada':camada})
+        return render(request, 'AppCoder/resultadosBusqueda.html', {'club':club, 'deporte':deporte})
 
     else:
         respuesta= 'No enviaste datos'

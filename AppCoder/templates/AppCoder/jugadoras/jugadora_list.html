@@ -1,0 +1,36 @@
+
+{% extends "AppCoder/padre.html" %}
+
+
+{% block contenidoModificable %}
+
+<h1>Jugadoras</h1>
+    
+{% endblock %}
+    
+{% block contenido2 %} 
+    <a href="{%url 'New' %}">Crear</a>
+
+        <ul> 
+
+            {% for jugadora in object_list %} 
+
+                 <li>
+
+                    <p>Nombre: {{jugadora.nombre}} </p>
+
+                    <P>
+                        <a href="{%url 'Detail' jugadora.id %}">Ver</a>
+                        <a href="{%url 'Edit' jugadora.id %}">Editar</a>
+                        <a href="{%url 'Delete' jugadora.id %}">Borrar</a>
+
+                    </P>
+
+                 </li>
+
+            {% endfor %} 
+
+
+        </ul>
+
+{% endblock %}  

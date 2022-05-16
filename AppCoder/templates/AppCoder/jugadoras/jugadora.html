@@ -1,17 +1,17 @@
-{% extends "AppCoder/padre.html" %}
+{% extends 'AppCoder/padre.html' %}
 
 {% load static %}
 
 
 {% block contenidoModificable %}
 
-<h1 style=color:lightblue>Cursos:</h1>
-
+<h1 style=color:lightblue> Jugadoras: </h1>
 
 {% endblock %}
 
 
 {% block contenido2 %} 
+        
 
 {% if miFormulario.errors %} 
 
@@ -19,9 +19,7 @@
 
 {% endif %} 
 
-<p>Cargar curso:
-
-</p>
+<p>Cargar jugadora:</p>
 <form action="" method = "POST">{% csrf_token %}
 
      <table>
@@ -31,22 +29,9 @@
      </table>
 
     <input type='submit' value="Enviar">
-    <p>
-       
-    </p>
-</form>
-
-<p>
-   Buscar curso por camada:
-</p>
-
-<form action="/AppCoder/buscar/" method="GET">{% csrf_token %}
-
-   <input TYPE="number" name="camada" id="camada">
-   <input type="submit" value="Buscar">
 
 </form>
 
 
-{% endblock %} 
 
+{% endblock %}

@@ -1,0 +1,13 @@
+
+{% extends "AppCoder/padre.html" %}
+
+{% load static %}
+
+{% block contenidoModificable %}
+<body>
+    <form action="" method="POST">{% csrf_token %} 
+        {{form.as_p}}
+        <button type="submit">Registrarse</button>
+    </form>
+</body>
+{% endblock %}

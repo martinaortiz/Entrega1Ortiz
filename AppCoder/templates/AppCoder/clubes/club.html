@@ -1,0 +1,52 @@
+{% extends "AppCoder/padre.html" %}
+
+{% load static %}
+
+
+{% block contenidoModificable %}
+
+<h1 style=color:lightblue>Clubes:</h1>
+
+
+{% endblock %}
+
+
+{% block contenido2 %} 
+
+{% if miFormulario.errors %} 
+
+<p style ='color:red'>Datos incorrectos</p>
+
+{% endif %} 
+
+<p>Cargar club:
+
+</p>
+<form action="" method = "POST">{% csrf_token %}
+
+     <table>
+
+        {{miFormulario.as_table}}
+
+     </table>
+
+    <input type='submit' value="Enviar">
+    <p>
+       
+    </p>
+</form>
+
+<p>
+   Buscar club por deporte:
+</p>
+
+<form action="/AppCoder/buscar/" method="GET">{% csrf_token %}
+
+   <input TYPE="text" name="deporte" id="deporte">
+   <input type="submit" value="Buscar">
+
+</form>
+
+
+{% endblock %} 
+

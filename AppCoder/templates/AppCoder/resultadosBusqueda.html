@@ -1,9 +1,9 @@
-<p>Estamos buscando el : {{camada}}</p>
-{% if curso %}
+<p>Estamos buscando: {{deporte}}</p>
+{% if club %}
 <ul>
-{% for curso in curso %} 
-    <li> {{curso.nombre}} </li>
-    <li> {{curso.camada}} </li>
+{% for club in club %} 
+    <li> {{club.nombre}} </li>
+    <li> {{club.deporte}} </li>
 {% endfor %} 
 </ul>
 

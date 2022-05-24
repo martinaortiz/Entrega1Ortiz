@@ -1,0 +1,26 @@
+
+{% extends "AppCoder/padre.html" %}
+
+
+{% block contenidoModificable %}
+
+<body>
+    <h1>Editar Perfil</h1>
+    <h1>De {{usuario}}</h1>
+
+    {% if miformulario1.errors %}
+    <p style ='color:red'>Datos incorrectos</p>
+    {% endif %}
+
+
+    <form action="" method="POST">{% csrf_token %} 
+        <table>
+
+            {{ miFormulario1.as_table }}
+
+        </table>
+        <input type="submit", value="Enviar">
+
+    </form>
+</body>
+{% endblock %}

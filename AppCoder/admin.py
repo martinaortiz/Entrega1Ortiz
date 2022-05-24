@@ -4,4 +4,4 @@ from .models import *
 # Register your models here.
 admin.site.register(Club)
 admin.site.register(Jugadora)
-admin.site.register(Profesor)
+admin.site.register(Torneo)

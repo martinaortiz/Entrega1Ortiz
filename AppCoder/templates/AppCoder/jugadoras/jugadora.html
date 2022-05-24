@@ -31,7 +31,17 @@
     <input type='submit' value="Enviar">
 
 </form>
+</form>
 
+<p>
+   Lista de jugadoras:
+</p>
+
+<form action="/AppCoder/jugadora/lista" method="GET">{% csrf_token %}
+
+   <input type="submit" value="lista de jugadoras">
+  
+</form>
 
 
 {% endblock %}

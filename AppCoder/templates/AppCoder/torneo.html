@@ -1,0 +1,53 @@
+{% extends 'AppCoder/padre.html' %}
+
+{% load static %}
+
+
+{% block contenidoModificable %}
+
+<h1 style=color:lightblue> Torneo Metropolitano de Hockey </h1>
+
+{% endblock %}
+
+
+{% block contenido2 %} 
+<h1 style=color:lightblue> Clubes que participan del torneo: </h1>
+<form action="/AppCoder/club/lista" method="GET">{% csrf_token %}
+
+   <input type="submit" value="lista de Clubes">
+  
+</form> 
+
+<!--{% if formulario1.errors %} 
+
+<p style ='color:red'>Datos incorrectos</p>
+
+{% endif %} 
+<p>Cargar Torneo:</p>
+<form action="" method = "POST">{% csrf_token %}
+
+     <table>
+
+        {{formulario1.as_table}}
+
+     </table>
+
+    <input type='submit' value="Enviar">
+
+</form>
+
+</form>
+
+<p>
+   Buscar torneo por deporte:
+</p>
+
+<form action="/AppCoder/buscarTorneo/" method="GET">{% csrf_token %}
+
+   <input TYPE="text" name="deporte" id="deporte">
+   <input type="submit" value="Buscar">
+
+</form>
+-->
+
+{% endblock %}

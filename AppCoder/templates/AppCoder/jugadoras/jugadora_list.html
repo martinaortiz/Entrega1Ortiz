@@ -9,7 +9,7 @@
 {% endblock %}
     
 {% block contenido2 %} 
-    <a href="{%url 'New' %}">Crear</a>
+    <a href="{%url 'NewJugadora' %}">Crear</a>
 
         <ul> 
 
@@ -20,9 +20,9 @@
                     <p>Nombre: {{jugadora.nombre}} </p>
 
                     <P>
-                        <a href="{%url 'Detail' jugadora.id %}">Ver</a>
-                        <a href="{%url 'Edit' jugadora.id %}">Editar</a>
-                        <a href="{%url 'Delete' jugadora.id %}">Borrar</a>
+                        <a href="{%url 'DetailJugadora' jugadora.id %}">Ver</a>
+                        <a href="{%url 'EditJugadora' jugadora.id %}">Editar</a>
+                        <a href="{%url 'DeleteJugadora' jugadora.id %}">Borrar</a>
 
                     </P>
 

@@ -1,17 +1,17 @@
 
 from django.http import HttpResponse
-from AppCoder.models import Club, Jugadora, Profesor
+from AppCoder.models import Club, Jugadora, Torneo
 from django.shortcuts import render
 from django.template import Template
-from AppCoder.forms import ClubFormulario, JugadoraForm, Profesores, RegistroFormulario
-from AppCoder.models import Jugadora
+from AppCoder.forms import ClubFormulario, JugadoraForm, RegistroFormulario, TorneoForm
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required 
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import AuthenticationForm
+from django.urls import reverse_lazy
 
 def register(request):
     if request.method == 'POST':
@@ -19,14 +19,40 @@ def register(request):
         form = RegistroFormulario(request.POST) #LEER LA DATA DEL FORMULARIO DE INICIO DE SESION
 
         if form.is_valid():
-            user=form.cleaned_data['username']
+            user = form.cleaned_data['username']
             form.save()
 
-            return render(request, 'AppCoder/inicio.html', {'mensaje':'Usuario Creado'})
+            return render(request, 'AppCoder/inicio.html', {'mensaje':"Usuario Creado"})
     else:
         form = RegistroFormulario()
     
     return render(request, 'AppCoder/registro.html', {'form': form})
+
+def editarUsuario(request):
+
+    usuario = request.user 
+
+    if request.method == 'POST':
+
+        miFormulario1 = RegistroFormulario(request.POST)
+        
+        if miFormulario1.is_valid():
+
+            info3 = miFormulario1.cleaned_data
+
+            usuario.username = info3['username']
+            usuario.email = info3['email']
+            usuario.password1 = info3['password1']
+            usuario.password2 = info3['password2']
+            usuario.save()
+
+            return render(request, 'AppCoder/inicio.html')
+    else:
+        miFormulario1 = RegistroFormulario(initial={'username':usuario.username, 'email':usuario.email})
+    
+    return render(request, 'AppCoder/editarUsuario.html',{'miFormulario1':miFormulario1, 'usuario':usuario.username})
+
+
 
 
 
@@ -59,7 +85,7 @@ def login_request(request):
 
     return render(request, "AppCoder/login.html", {'form':form}) #vincular la vista con la plantilla de html
 
-
+@login_required
 def club(request):
 
     if request.method == 'POST':
@@ -106,7 +132,7 @@ class ClubDelete(DeleteView):
     model = Club
     success_url= '/AppCoder/club/lista'
 
-
+@login_required
 def jugadora(request):
   
      if request.method == 'POST':
@@ -131,7 +157,6 @@ def jugadora(request):
 
      return render(request, 'AppCoder/jugadoras/jugadora.html', {'miFormulario': miFormulario})
 
-
 class JugadoraList(LoginRequiredMixin, ListView):
     model = Jugadora
     template_name = 'AppCoder/jugadoras/jugadora_list.html'
@@ -147,6 +172,7 @@ class JugadoraCreacion(CreateView):
 
 class JugadoraUpdate(UpdateView):
     model = Jugadora
+    template_name= 'AppCoder/jugadoras/jugadora_delete.html'
     success_url= '/AppCoder/jugadora/lista'
     fields= ['nombre', 'apellido', 'mail', 'club', 'deporte']
 
@@ -156,42 +182,9 @@ class JugadoraDelete(DeleteView):
 
 
 
-
-
-
-def profesor(request):
-  
-     if request.method == 'POST':
-
-        profesores = Profesores(request.POST) 
-
-        print(profesores) 
-
-        if profesores.is_valid():       
-
-            info2 = profesores.cleaned_data
-
-            profesor = Profesor(nombre=info2['nombre'], apellido=info2['apellido'], materia=info2['materia'], mail=info2['mail']) #creo el curso con la info recivida
-
-            profesor.save()
-
-            return render(request, 'AppCoder/inicio.html') 
-
-     else:
-        profesores = Profesores() 
-
-
-     return render(request, 'AppCoder/profesor.html', {'profesores': profesores})
-
-
 def inicio(request):
 
     return render(request, 'AppCoder/inicio.html')
-
-
-#def busquedaCamada(request):
-
-  #  return render(request, 'AppCoder/busquedaCamada.html')
 
 def buscar(request):
 
@@ -208,3 +201,31 @@ def buscar(request):
 
     return HttpResponse(respuesta)
     
+def torneo(request):
+  
+     if request.method == 'POST':
+
+        formulario1 = TorneoForm(request.POST) 
+
+        print(formulario1) 
+
+        if formulario1.is_valid():       
+
+            info = formulario1.cleaned_data
+
+            torneo = Torneo(nombre=info['nombre'], deporte=info['deporte'], duracion=info['duracion']) 
+
+            torneo.save()
+
+            return render(request, 'AppCoder/inicio.html') 
+
+     else:
+         formulario1 = TorneoForm() 
+
+
+     return render(request, 'AppCoder/torneo.html', {'formulario1': formulario1})
+
+
+
+def listaJugadoras(request):
+    return render(request, 'AppCoder/jugadoras/jugadora_list.html')

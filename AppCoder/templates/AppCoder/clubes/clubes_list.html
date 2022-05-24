@@ -1,39 +1,41 @@
-
 {% extends "AppCoder/padre.html" %}
 
 
 {% block contenidoModificable %}
 
-    <h1>Clubes</h1>
-    
+<h1>Clubes</h1>
+
 {% endblock %}
-    
-{% block contenido2 %} 
 
-        <a href="{%url 'New' %}">Crear</a>
+{% block contenido2 %}
 
-        <ul> 
+<a href="{% url 'New' %}">Crear</a>
 
-            {% for club in object_list %} 
+<ul>
 
-            <li>
+    {% for club in object_list %}
 
-                <p>Nombre: {{club.nombre}} </p>
+    <li>
 
-                <P>
+        <p>Nombre: {{club.nombre}} </p>
 
-                    <a href="{%url 'Detail' club.id %}">Ver</a>
-                    <a href="{%url 'Edit' club.id %}">Editar</a>
-                    <a href="{%url 'Delete' club.id %}">Borrar</a>
+        <P>
+            <button>
+                <a href="{% url 'Detail' club.id %}">Ver</a>
+            </button>
+            <button>
+                <a href="{% url 'Edit' club.id %}">Editar</a>
+            </button>
+            <button>
+            <a href="{% url 'Delete' club.id %}">Borrar</a>
+            </button>
+        </P>
 
-                </P>
+    </li>
 
-            </li>
-
-            {% endfor %} 
+    {% endfor %}
 
 
-        </ul>
+</ul>
 
-{% endblock %}  
-
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "AppCoder/padre.html" %}
+
+{% if miFormulario3.errors %} 
+
+<p style="color:red">Estan mal los datos</p>
+
+{% endif %} 
+
+<form action="" method="POST"> {% csrf_token %} 
+
+    <table>
+
+        {{miFormulario3.as_table}}
+        
+    </table>
+
+    <input type="submit", value="Enviar", style="color:aqua">
+
+</form>

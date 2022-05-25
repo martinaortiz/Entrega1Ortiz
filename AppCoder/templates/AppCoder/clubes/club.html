@@ -19,34 +19,25 @@
 
 {% endif %} 
 
-<p>Cargar club:
-
-</p>
-<form action="" method = "POST">{% csrf_token %}
-
-     <table>
-
-        {{miFormulario.as_table}}
-
-     </table>
-
-    <input type='submit' value="Enviar">
-    <p>
-       
-    </p>
+<br>
 </form>
 
+<form action="/AppCoder/club/lista" method="GET">{% csrf_token %}
+
+   <input type="submit" value="Info Clubes">
+  
+</form>
+<br>
 <p>
-   Buscar club por deporte:
+   Buscar club por Division:
 </p>
 
 <form action="/AppCoder/buscar/" method="GET">{% csrf_token %}
 
-   <input TYPE="text" name="deporte" id="deporte">
+   <input TYPE="text" name="division" id="division">
    <input type="submit" value="Buscar">
   
 </form>
-
 
 {% endblock %} 
 

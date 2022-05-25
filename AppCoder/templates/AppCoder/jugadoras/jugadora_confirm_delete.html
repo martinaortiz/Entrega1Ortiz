@@ -8,9 +8,11 @@
 </head>
 <body>
     <form method="post">{% csrf_token %} 
-        Estas seguro de que deseas borrar la jugadora '{{ object }}' ?
+        Estas seguro de que deseas borrar la jugadora '{{ jugadora.nombre }}' ?
         <input type="submit" value="Enviar" />
-        
+        <button>
+            <a  href='{% url "ListJugadora" %}'>Regresar</a>
+        </button>
     </form>
 </body>
 </html>

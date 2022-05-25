@@ -1,6 +1,6 @@
 
 from django.http import HttpResponse
-from AppCoder.models import Club, Jugadora, Torneo
+from AppCoder.models import Avatar, Club, Jugadora, Torneo
 from django.shortcuts import render
 from django.template import Template
 from AppCoder.forms import ClubFormulario, JugadoraForm, RegistroFormulario, TorneoForm
@@ -53,9 +53,6 @@ def editarUsuario(request):
     return render(request, 'AppCoder/editarUsuario.html',{'miFormulario1':miFormulario1, 'usuario':usuario.username})
 
 
-
-
-
 def login_request(request):
 
     if request.method == 'POST': #al presionar el boton iniciar sesion
@@ -98,7 +95,7 @@ def club(request):
 
             informacion = miFormulario.cleaned_data
 
-            club = Club(nombre=informacion['club'], division=informacion['division'], deporte=informacion['deporte']) #creo el curso con la info recivida
+            club = Club(nombre=informacion['nombre'], division=informacion['division'], deporte=informacion['deporte']) #creo el curso con la info recivida
 
             club.save()
 
@@ -110,6 +107,7 @@ def club(request):
 
     return render(request, 'AppCoder/clubes/club.html', {'miFormulario':miFormulario})
 
+
 class ClubList(LoginRequiredMixin, ListView):
     model = Club
     template_name = 'AppCoder/clubes/clubes_list.html'
@@ -120,16 +118,19 @@ class ClubDetalle(DetailView):
 
 class ClubCreacion(CreateView):
     model = Club
+    template_name= 'AppCoder/clubes/club_form.html'
     success_url= '/AppCoder/club/lista'
     fields= ['nombre', 'division', 'deporte']
 
 class ClubUpdate(UpdateView):
     model = Club
+    template_name= 'AppCoder/clubes/club_form.html'
     success_url= '/AppCoder/club/lista'
     fields= ['nombre', 'division', 'deporte']
 
 class ClubDelete(DeleteView):
     model = Club
+    template_name= 'AppCoder/clubes/club_confirm_delete.html'
     success_url= '/AppCoder/club/lista'
 
 @login_required
@@ -145,7 +146,7 @@ def jugadora(request):
 
             info1 = miFormulario.cleaned_data
 
-            jugadora = Jugadora(nombre=info1['nombre'], apellido=info1['apellido'], mail=info1['mail'], club=info1['club'], deporte=info1['deporte'])  
+            jugadora = Jugadora(nombre=info1['nombre'], apellido=info1['apellido'], mail=info1['mail'], club=info1['club'])  
 
             jugadora.save()
 
@@ -157,6 +158,7 @@ def jugadora(request):
 
      return render(request, 'AppCoder/jugadoras/jugadora.html', {'miFormulario': miFormulario})
 
+
 class JugadoraList(LoginRequiredMixin, ListView):
     model = Jugadora
     template_name = 'AppCoder/jugadoras/jugadora_list.html'
@@ -167,40 +169,41 @@ class JugadoraDetalle(DetailView):
 
 class JugadoraCreacion(CreateView):
     model = Jugadora
+    template_name= 'AppCoder/jugadoras/jugadora_form.html'
     success_url= '/AppCoder/jugadora/lista'
     fields= ['nombre', 'apellido', 'mail', 'club', 'deporte']
 
 class JugadoraUpdate(UpdateView):
     model = Jugadora
-    template_name= 'AppCoder/jugadoras/jugadora_delete.html'
+    template_name= 'AppCoder/jugadoras/jugadora_form.html'
     success_url= '/AppCoder/jugadora/lista'
     fields= ['nombre', 'apellido', 'mail', 'club', 'deporte']
 
 class JugadoraDelete(DeleteView):
     model = Jugadora
+    template_name= 'AppCoder/jugadoras/jugadora_confirm_delete.html'
     success_url= '/AppCoder/jugadora/lista'
 
-
-
 def inicio(request):
-
-    return render(request, 'AppCoder/inicio.html')
+    avatares = Avatar.objects.filter(user=request.user.id)
+    return render(request, 'AppCoder/inicio.html',{'url':avatares[0].imagen.url})
 
 def buscar(request):
 
-    if request.GET['deporte']:
+    if request.GET['division']:
 
-        deporte= request.GET['deporte']
+        division= request.GET['division']
         #curso = Curso.objects.filter(camada__icontains=camada) #icontains significa que el numero que buscamos esta dentro del numero de camada
-        club = Club.objects.filter(deporte__iexact=deporte)
+        club = Club.objects.filter(division__iexact=division)
 
-        return render(request, 'AppCoder/resultadosBusqueda.html', {'club':club, 'deporte':deporte})
+        return render(request, 'AppCoder/resultadosBusqueda.html', {'club':club, 'division':division})
 
     else:
         respuesta= 'No enviaste datos'
 
     return HttpResponse(respuesta)
-    
+
+@login_required   
 def torneo(request):
   
      if request.method == 'POST':
@@ -224,8 +227,3 @@ def torneo(request):
 
 
      return render(request, 'AppCoder/torneo.html', {'formulario1': formulario1})
-
-
-
-def listaJugadoras(request):
-    return render(request, 'AppCoder/jugadoras/jugadora_list.html')

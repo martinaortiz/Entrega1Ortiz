@@ -8,9 +8,13 @@
 </head>
 <body>
     <form method="post">{% csrf_token %} 
-        Estas seguro de que deseas borrar el club '{{ object }}' ?
+        Estas seguro de que deseas borrar el club '{{ club.nombre }}' ?
         <input type="submit" value="Enviar" />
-        
     </form>
+    <br>
+    <button>
+        <a  href='{% url "ListClubes" %}'>Regresar</a>
+    </button>
+    
 </body>
 </html>

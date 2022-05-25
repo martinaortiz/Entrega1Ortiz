@@ -8,11 +8,12 @@
 {% endblock %}
 
 {% block contenido2 %}
+<button>
+<a href="{% url 'New' %}">Agregar Club</a>
+</button>
 
-<a href="{% url 'New' %}">Crear</a>
-
+<br>
 <ul>
-
     {% for club in object_list %}
 
     <li>
@@ -34,7 +35,10 @@
     </li>
 
     {% endfor %}
-
+<br>
+<p>
+    <a  href='{% url "Clubes" %}'>Regresar</a>
+</p>
 
 </ul>
 

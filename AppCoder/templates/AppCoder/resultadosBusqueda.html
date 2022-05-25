@@ -1,9 +1,8 @@
-<p>Estamos buscando: {{deporte}}</p>
+<p>Clubes de division {{division}} :</p>
 {% if club %}
 <ul>
 {% for club in club %} 
     <li> {{club.nombre}} </li>
-    <li> {{club.deporte}} </li>
 {% endfor %} 
 </ul>
 <p>

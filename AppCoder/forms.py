@@ -4,7 +4,7 @@ from django import forms
 
 class ClubFormulario(forms.Form):
 
-    club = forms.CharField()
+    nombre = forms.CharField()
     division = forms.CharField()
     deporte = forms.CharField()
 
@@ -13,7 +13,13 @@ class JugadoraForm(forms.Form):
     apellido = forms.CharField()
     mail = forms.EmailField()
     club = forms.CharField()
+
+class TorneoForm(forms.Form):
+    nombre = forms.CharField()
     deporte = forms.CharField()
+    duracion = forms.IntegerField()
+
+
 
 
 class RegistroFormulario(UserCreationForm):

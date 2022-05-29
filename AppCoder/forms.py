@@ -14,14 +14,6 @@ class JugadoraForm(forms.Form):
     mail = forms.EmailField()
     club = forms.CharField()
 
-class TorneoForm(forms.Form):
-    nombre = forms.CharField()
-    deporte = forms.CharField()
-    duracion = forms.IntegerField()
-
-
-
-
 class RegistroFormulario(UserCreationForm):
 
     email = forms.EmailField()

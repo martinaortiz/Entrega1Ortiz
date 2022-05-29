@@ -5,7 +5,7 @@
 
 {% block contenidoModificable %}
 
-<h1 style=color:lightblue> Jugadoras: </h1>
+<h1 style=color:lightblue> Jugadoras </h1>
 
 {% endblock %}
 
@@ -18,30 +18,15 @@
 <p style ='color:red'>Datos incorrectos</p>
 
 {% endif %} 
-
-<p>Cargar jugadora:</p>
-<form action="" method = "POST">{% csrf_token %}
-
-     <table>
-
-        {{miFormulario.as_table}}
-
-     </table>
-
-    <input type='submit' value="Enviar">
-
+<br>
 </form>
-</form>
-
-<p>
-   Lista de jugadoras:
-</p>
 
 <form action="/AppCoder/jugadora/lista" method="GET">{% csrf_token %}
 
-   <input type="submit" value="lista de jugadoras">
+   <input type="submit" value="Info Jugadoras">
   
 </form>
+
 
 
 {% endblock %}

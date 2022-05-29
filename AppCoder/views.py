@@ -1,9 +1,10 @@
 
+from msilib.schema import Class
 from django.http import HttpResponse
-from AppCoder.models import Avatar, Club, Jugadora, Torneo
+from AppCoder.models import Avatar, Club, Jugadora
 from django.shortcuts import render
 from django.template import Template
-from AppCoder.forms import ClubFormulario, JugadoraForm, RegistroFormulario, TorneoForm
+from AppCoder.forms import ClubFormulario, JugadoraForm, RegistroFormulario
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -82,7 +83,7 @@ def login_request(request):
 
     return render(request, "AppCoder/login.html", {'form':form}) #vincular la vista con la plantilla de html
 
-@login_required
+
 def club(request):
 
     if request.method == 'POST':
@@ -106,6 +107,7 @@ def club(request):
 
 
     return render(request, 'AppCoder/clubes/club.html', {'miFormulario':miFormulario})
+
 
 
 class ClubList(LoginRequiredMixin, ListView):
@@ -133,7 +135,6 @@ class ClubDelete(DeleteView):
     template_name= 'AppCoder/clubes/club_confirm_delete.html'
     success_url= '/AppCoder/club/lista'
 
-@login_required
 def jugadora(request):
   
      if request.method == 'POST':
@@ -171,22 +172,26 @@ class JugadoraCreacion(CreateView):
     model = Jugadora
     template_name= 'AppCoder/jugadoras/jugadora_form.html'
     success_url= '/AppCoder/jugadora/lista'
-    fields= ['nombre', 'apellido', 'mail', 'club', 'deporte']
+    fields= ['nombre', 'apellido', 'mail', 'club']
 
 class JugadoraUpdate(UpdateView):
     model = Jugadora
     template_name= 'AppCoder/jugadoras/jugadora_form.html'
     success_url= '/AppCoder/jugadora/lista'
-    fields= ['nombre', 'apellido', 'mail', 'club', 'deporte']
+    fields= ['nombre', 'apellido', 'mail', 'club']
 
 class JugadoraDelete(DeleteView):
     model = Jugadora
-    template_name= 'AppCoder/jugadoras/jugadora_confirm_delete.html'
+    template_name= 'AppCoder/jugadoras/jugadora_form.html'
     success_url= '/AppCoder/jugadora/lista'
+    fields= ['nombre', 'apellido','mail', 'club']
 
+
+@login_required  
 def inicio(request):
     avatares = Avatar.objects.filter(user=request.user.id)
-    return render(request, 'AppCoder/inicio.html',{'url':avatares[0].imagen.url})
+    mensaje = 'Pagina oficial del Torneo Metropolitano de Hockey'
+    return render(request, 'AppCoder/inicio.html',{'mensaje': mensaje, 'url':avatares[0].imagen.url})
 
 def buscar(request):
 
@@ -202,28 +207,9 @@ def buscar(request):
         respuesta= 'No enviaste datos'
 
     return HttpResponse(respuesta)
-
-@login_required   
-def torneo(request):
   
-     if request.method == 'POST':
+def torneo(request):
+     return render(request, 'AppCoder/torneo.html')
 
-        formulario1 = TorneoForm(request.POST) 
-
-        print(formulario1) 
-
-        if formulario1.is_valid():       
-
-            info = formulario1.cleaned_data
-
-            torneo = Torneo(nombre=info['nombre'], deporte=info['deporte'], duracion=info['duracion']) 
-
-            torneo.save()
-
-            return render(request, 'AppCoder/inicio.html') 
-
-     else:
-         formulario1 = TorneoForm() 
-
-
-     return render(request, 'AppCoder/torneo.html', {'formulario1': formulario1})
+def acercaDeMi(request):
+    return render(request, 'AppCoder/aboutMe.html' )

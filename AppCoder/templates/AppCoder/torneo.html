@@ -9,9 +9,13 @@
 
 {% endblock %}
 
+{% block contenidoModificable3 %} 
+<p><em>El torneo Metropolitano de Hockey Femenino es una competencia de hockey sobre cesped, en la que participan clubes de Buenos Aires, Argentina.</em></p>
+{% endblock %}
+
 
 {% block contenido2 %} 
-<h3 style=color:rgb(74, 174, 207)> Clubes que participan del torneo: </h3>
+<h3 style=color:rgb(70, 192, 233)> Clubes que participan del torneo: </h3>
    <form action="/AppCoder/club/lista" method="GET">{% csrf_token %}
 
       <input type="submit" value="lista de Clubes">

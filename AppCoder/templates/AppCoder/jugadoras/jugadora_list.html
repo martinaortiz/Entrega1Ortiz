@@ -9,36 +9,44 @@
 {% endblock %}
     
 {% block contenido2 %} 
+<button>
+    <a href="{% url 'NewJugadora' %}">Agregar Jugadora</a>
+    </button>
     
+    <br>    
+<ul> 
 
-        <ul> 
+    {% for jugadora in object_list %} 
 
-            {% for jugadora in object_list %} 
+        <li>
 
-                 <li>
+        <p>Nombre: {{jugadora.nombre}} {{jugadora.apellido}} </p>
 
-                    <p>Nombre: {{jugadora.nombre}} {{jugadora.apellido}} </p>
+        <P>
 
-                    <P>
-                        <button>
-                        <a href="{%url 'DetailJugadora' jugadora.id %}">Ver</a>
-                        </button>
-                        <button>
-                        <a href="{%url 'EditJugadora' jugadora.id %}">Editar</a>
-                        </button>
-                        <button>
-                        <a href="{%url 'DeleteJugadora' jugadora.id %}">Borrar</a>
-                        </button>
+        <button>
+        <a href="{%url 'DetailJugadora' jugadora.id %}">Ver</a>
+        </button>
 
-                    </P>
+        <button>
+        <a href="{%url 'EditJugadora' jugadora.id %}">Editar</a>
+        </button>
 
-                 </li>
+        <button>
+        <a href="{%url 'DeleteJugadora' jugadora.id %}">Borrar</a>
+        </button>
+
+        </P>
+
+        </li>
                 
-            {% endfor %} 
-            <button>
-                <a  href='{% url "ListJugadora" %}'>Regresar</a>
-            </button>
+    {% endfor %} 
 
-        </ul>
+<br>
+<p>
+<a  href='{% url "Jugadoras" %}'>Regresar</a>
+</p>
+    
+</ul>
 
 {% endblock %}  

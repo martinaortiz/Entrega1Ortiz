@@ -1,11 +1,12 @@
 {% extends "AppCoder/padre.html" %}
 
 {% block contenidoModificable %}
+<h1 style=color:lightblue>{{mensaje}}</h1>
+{% endblock %}
 
-<h1>{{mensaje}}</h1>
-
+<br>
+{% block contenidoModificable3 %} 
 <div class="text-center">
     <img  height="40px" src="{{url}}" >
-    
 </div>
 {% endblock %}

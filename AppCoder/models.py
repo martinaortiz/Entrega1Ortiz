@@ -13,13 +13,8 @@ class Jugadora(models.Model):
     apellido = models.CharField(max_length=30)
     mail = models.EmailField(default='')
     club = models.CharField(max_length=30)
-    deporte = models.CharField(max_length=30)
-
-class Torneo(models.Model):
-    nombre = models.CharField(max_length=30)
-    deporte = models.CharField(max_length=30)
-    duracion = models.IntegerField()
 
 class Avatar(models.Model):
     user= models.ForeignKey(User, on_delete=models.CASCADE)
     imagen = models.ImageField(upload_to='avatares', null=True, blank = True)
+
